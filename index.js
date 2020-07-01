@@ -19,7 +19,7 @@ web.use(express.static(`${__dirname}/app`));
 web.use('/node_modules', express.static(`${__dirname}/node_modules`));
 
 web.get('/', (req, res) => {
-    res.sendFile(`${__dirname}/app/index.html`)
+    res.sendFile(`${__dirname}/app/login.html`);
 });
 
 web.listen(port, () => {
@@ -30,12 +30,12 @@ app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
 })
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow()
+        createWindow();
     }
 });
