@@ -1,0 +1,22 @@
+{
+  "name": "electron-twitch-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "electron": "^9.0.5",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "path": "^0.12.7",
+    "popper.js": "^1.16.1",
+    "url": "^0.11.0"
+  }
+}
