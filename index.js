@@ -1,8 +1,15 @@
 const { app, BrowserWindow } = require('electron');
-const express = require('express');
+const prepareNext = require('electron-next');
+const isDev = require('electron-is-dev');
 const path = require('path');
-const web = express();
+const Store = require('electron-store');
+const settings = new Store();
 const port = 9393;
+
+const devPath = `http://localhost:${port}/`;
+const prodPath = path.resolve('renderer/out/index/index.html');
+const entry = isDev ? devPath : 'file://' + prodPath;
+
 function createWindow() {
     let win = new BrowserWindow({
         width: 800,
@@ -12,21 +19,17 @@ function createWindow() {
         }
     });
 
-    win.loadURL('http://localhost:9393/')
+    win.loadURL(entry);
 }
-web.use(express.json());
-web.use(express.static(`${__dirname}/app`));
-web.use('/node_modules', express.static(`${__dirname}/node_modules`));
 
-web.get('/', (req, res) => {
-    res.sendFile(`${__dirname}/app/login.html`);
+app.whenReady().then(async () => {
+    try {
+        await prepareNext('./renderer', port);
+        createWindow();
+    } catch (err) {
+        console.log(err);
+    }
 });
-
-web.listen(port, () => {
-    console.log("Listening...");
-});
-
-app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
