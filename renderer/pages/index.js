@@ -20,7 +20,7 @@ class Login extends React.Component {
             if (res) {
                 res.writeHead(301, {
                     Location: '/main'
-                })
+                });
             } else {
                 Router.push('/main');
             }
