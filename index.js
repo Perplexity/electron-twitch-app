@@ -2,8 +2,6 @@ const { app, BrowserWindow } = require('electron');
 const prepareNext = require('electron-next');
 const isDev = require('electron-is-dev');
 const path = require('path');
-const Store = require('electron-store');
-const settings = new Store();
 const port = 9393;
 
 const devPath = `http://localhost:${port}/`;

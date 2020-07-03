@@ -30,3 +30,8 @@
     margin-top: 15px;
     text-align: center;
 }
+
+.user-icon {
+    max-width: 64px;
+    max-height: 64px;
+}

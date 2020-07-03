@@ -6,7 +6,7 @@ const isAuthed = new Promise(async (resolve) => {
     let authToken = settings.get('access_token');
     if (authToken) {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "OAuth lojycc8xfmnsn6b9u4jtvkjf7nygff");
+        myHeaders.append("Authorization", `OAuth ${authToken}`);
         var requestOptions = {
             method: 'GET',
             headers: myHeaders,
