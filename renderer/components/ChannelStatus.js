@@ -1,5 +1,6 @@
 import Spinner from 'react-bootstrap/Spinner';
-class UserInfoHeader extends React.Component {
+import Enumerable from 'linq';
+class ChannelStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = { loading: true }
@@ -9,14 +10,7 @@ class UserInfoHeader extends React.Component {
         if (this.state.loading) {
             return <Spinner variant="dark" animation="border"></Spinner>
         }
-        const { profile_image_url, display_name, email } = this.state.userInfo;
-        return (
-            <div>
-                <img className="user-icon" src={profile_image_url}></img>
-                <h5>{display_name}</h5>
-                <small>{email}</small>
-            </div>
-        );
+        return this.state.live ? <small><span className="badge badge-success">LIVE</span></small> : <small><span className="badge badge-secondary">Offline</span></small>;
     }
 
     async componentDidMount() {
@@ -30,15 +24,16 @@ class UserInfoHeader extends React.Component {
             redirect: 'follow'
         };
 
-        const response = await fetch(`https://api.twitch.tv/helix/users?id=${this.props.userId}`, requestOptions);
+        const response = await fetch(`https://api.twitch.tv/helix/streams?user_id=${this.props.userId}`, requestOptions);
         if (response.ok) {
-            const userInfo = await response.json();
+            const streams = await response.json();
+            const live = Enumerable.from(streams.data).any((stream) => { return stream.type == "live" });
             this.setState({
-                userInfo: userInfo.data[0],
+                live: live,
                 loading: false
             });
         }
     }
 }
 
-export default UserInfoHeader;
+export default ChannelStatus;
