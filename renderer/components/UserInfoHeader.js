@@ -8,11 +8,12 @@ class UserInfoHeader extends React.Component {
         if (this.state.loading) {
             return <Spinner animation="border"></Spinner>
         }
+        const { profile_image_url, display_name, email } = this.state.userInfo.data[0];
         return (
             <div>
-                <img className="user-icon" src={this.state.userInfo.data[0].profile_image_url}></img>
-                <h5>{this.state.userInfo.data[0].display_name}</h5>
-                <small>{this.state.userInfo.data[0].email}</small>
+                <img className="user-icon" src={profile_image_url}></img>
+                <h5>{display_name}</h5>
+                <small>{email}</small>
             </div>
         );
     }
