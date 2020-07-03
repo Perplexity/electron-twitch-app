@@ -1,48 +1,21 @@
-import Router from "next/router";
-const Store = require('electron-store');
-const settings = new Store();
+import Router from 'next/router';
+import { isAuthed, settings } from '../modules/auth';
 
 class Login extends React.Component {
-    componentDidMount() {
+    async componentDidMount() {
         const oauthHash = location.hash.substr(1);
         let accessToken = oauthHash.substr(oauthHash.indexOf('access_token=')).split('&')[0].split('=')[1];
         if (accessToken) {
             settings.set('access_token', accessToken);
+            Router.push('/dashboard');
         }
-        accessToken = settings.get('access_token');
-        if (accessToken) {
-            Router.push('/main');
-        }
-    }
-    static async getInitialProps({ res }) {
-        accessToken = settings.get('access_token');
-        if (accessToken) {
-            if (res) {
-                res.writeHead(301, {
-                    Location: '/main'
-                });
-            } else {
-                Router.push('/main');
-            }
-        }
-        const scopes = [
-            "user:read:email"
-        ];
-        const clientID = 'm3z8aizq826yeemsji48l6tbcee12r';
-        const scope = scopes.join("+");
-        const url = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=http://localhost:9393/&scope=${scope}`;
-        return { loginUrl: url }
     }
 
     render() {
         return (
             <div>
                 <style jsx global>{
-                    `
-                        html, body {
-                            height: 100%;
-                        }
-                        
+                    `   
                         body {
                             background-color: #f5f5f5;
                             display: flex;
@@ -98,6 +71,28 @@ class Login extends React.Component {
                 </div>
             </div>
         )
+    }
+}
+
+export async function getServerSideProps({ res }) {
+    const authed = await isAuthed;
+    if (authed) {
+        if (res) {
+            res.writeHead(301, {
+                Location: '/dashboard'
+            });
+            res.end();
+            return { props: {} };
+        }
+    }
+    const scopes = [
+        "user:read:email"
+    ];
+    const clientID = 'm3z8aizq826yeemsji48l6tbcee12r';
+    const scope = scopes.join("+");
+    const url = `https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${clientID}&redirect_uri=http://localhost:9393/&scope=${scope}`;
+    return {
+        props: { loginUrl: url }
     }
 }
 
