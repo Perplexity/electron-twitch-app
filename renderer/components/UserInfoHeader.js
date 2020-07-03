@@ -12,6 +12,7 @@ class UserInfoHeader extends React.Component {
             <div>
                 <img className="user-icon" src={this.state.userInfo.data[0].profile_image_url}></img>
                 <h5>{this.state.userInfo.data[0].display_name}</h5>
+                <small>{this.state.userInfo.data[0].email}</small>
             </div>
         );
     }

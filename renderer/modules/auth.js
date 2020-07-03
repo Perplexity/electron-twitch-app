@@ -13,7 +13,7 @@ const isAuthed = new Promise(async (resolve) => {
             redirect: 'follow'
         };
         const response = await fetch("https://id.twitch.tv/oauth2/validate", requestOptions);
-        if(response.ok) {
+        if (response.ok) {
             authInfo = await response.json();
             resolve(true);
         }
@@ -22,10 +22,6 @@ const isAuthed = new Promise(async (resolve) => {
     resolve(false);
 });
 
-function getAuthInfo() {
-    return authInfo;
-}
-
 module.exports.isAuthed = isAuthed;
 module.exports.settings = settings;
-module.exports.getAuthInfo = getAuthInfo;
+module.exports.getAuthInfo = () => { return authInfo }
