@@ -15,8 +15,8 @@ class ChannelStatus extends React.Component {
 
     async componentDidMount() {
         var myHeaders = new Headers();
-        myHeaders.append("Client-ID", this.props.clientId);
-        myHeaders.append("Authorization", `Bearer ${this.props.accessToken}`);
+        myHeaders.append("Client-ID", this.props.authInfo.clientId);
+        myHeaders.append("Authorization", `Bearer ${this.props.authInfo.accessToken}`);
 
         var requestOptions = {
             method: 'GET',
@@ -24,7 +24,7 @@ class ChannelStatus extends React.Component {
             redirect: 'follow'
         };
 
-        const response = await fetch(`https://api.twitch.tv/helix/streams?user_id=${this.props.userId}`, requestOptions);
+        const response = await fetch(`https://api.twitch.tv/helix/streams?user_id=${this.props.authInfo.userId}`, requestOptions);
         if (response.ok) {
             const streams = await response.json();
             const live = Enumerable.from(streams.data).any((stream) => { return stream.type == "live" });

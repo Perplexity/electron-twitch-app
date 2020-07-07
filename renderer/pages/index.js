@@ -34,32 +34,6 @@ class Login extends React.Component {
                             padding: 15px;
                             margin: 0 auto;
                         }
-                        
-                        .btn-outline-twitch {
-                            color: #7A2FE7;
-                            border-color: #7A2FE7;
-                        }
-                        
-                        .btn-outline-twitch:hover {
-                            color: #fff;
-                            background-color: #7A2FE7;
-                            border-color: #7A2FE7;
-                        }
-                        
-                        .btn-outline-twitch:focus, .btn-outline-twitch.focus {
-                            box-shadow: 0 0 0 0.2rem rgba(122, 50, 231, 0.5);
-                        }
-                        
-                        .btn-outline-twitch.disabled, .btn-outline-twitch:disabled {
-                            color: #7A2FE7;
-                            background-color: transparent;
-                        }
-                        
-                        .btn-outline-twitch:not(:disabled):not(.disabled):active, .btn-outline-twitch:not(:disabled):not(.disabled).active, .show>.btn-outline-twitch.dropdown-toggle {
-                            color: #fff;
-                            background-color: #7A2FE7;
-                            border-color: #7A2FE7;
-                        }
                         `
                 }</style>
                 <div className="signin-form">
@@ -86,7 +60,8 @@ export async function getServerSideProps({ res }) {
         }
     }
     const scopes = [
-        "user:read:email"
+        "user:read:email",
+        "moderation:read"
     ];
     const clientID = 'm3z8aizq826yeemsji48l6tbcee12r';
     const scope = scopes.join("+");

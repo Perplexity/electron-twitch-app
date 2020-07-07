@@ -12,13 +12,17 @@
     left: 0;
     margin-left: 264px;
     height: 100%;
+    overflow: auto;
 }
 
 .nav-left-sidebar {
     position: fixed;
     width: 264px;
     height: 100%;
-    overflow: auto;
+}
+
+.table {
+    color: white;
 }
 
 .twitch-sidebar {
@@ -35,4 +39,52 @@
     border-radius: 50%;
     max-width: 64px;
     max-height: 64px;
+}
+
+.menu-list {
+    color: white;
+}
+
+.navbar-nav {
+    padding: 14px;
+}
+
+.nav-divider {
+    padding: 10px 14px;
+    line-height: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px;
+    margin-bottom: 2px;
+    display: block;
+    transition: 0.3s;
+    color: white;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: #333338;
+    color: white;
+    border-radius: 2px;
+}
+
+.dashboard-body {
+    color: white;
+    padding: 30px;
+    height: 100%;
+    overflow: auto;
+}
+
+.component-view {
+    height: 100%;
+}
+
+.component-body {
+    border-radius: 5px;
+    background-color: #1f1f23;
 }

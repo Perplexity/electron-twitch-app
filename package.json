@@ -13,6 +13,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.5.0",
     "electron-is-dev": "^1.2.0",
