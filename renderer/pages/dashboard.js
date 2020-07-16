@@ -6,6 +6,7 @@ import { faBan, faHammer } from '@fortawesome/free-solid-svg-icons'
 import UserInfoHeader from '../components/UserInfoHeader';
 import ChannelStatus from '../components/ChannelStatus';
 import BannedUsers from '../components/BannedUsers';
+import Moderators from '../components/Moderators';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -57,6 +58,8 @@ class Dashboard extends React.Component {
         switch (selection) {
             case "banned-users":
                 return <BannedUsers authInfo={this.state.authInfo} />
+            case "moderators":
+                return <Moderators authInfo={this.state.authInfo} />
             default:
                 return <h1>404 Not Found</h1>
         }

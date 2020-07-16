@@ -1,12 +1,12 @@
 import Spinner from 'react-bootstrap/Spinner';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-class BannedUsersTable extends React.Component {
+class ModeratorsTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: true,
-            bans: [],
+            moderators: [],
             cursor: null
         }
     }
@@ -20,20 +20,18 @@ class BannedUsersTable extends React.Component {
                 <thead>
                     <tr>
                         <th>Username</th>
-                        <th>Expires</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.bans.map((ban, i) => (
+                    {this.state.moderators.map((mod, i) => (
                         <tr key={i}>
-                            <td>{ban.user_name}</td>
-                            <td>{ban.expires_at ? ban.expires_at : "Never"}</td>
+                            <td>{mod.user_name}</td>
                         </tr>
                     ))}
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colSpan="2">
+                        <td>
                             <div>
                                 <Button variant="dark" className="float-left" onClick={this.loadPreviousUsers.bind(this)}>Prev</Button>
                                 {this.state.cursor ? <Button variant="dark" className="float-right" onClick={this.loadNextUsers.bind(this)}>Next</Button> : null}
@@ -46,20 +44,20 @@ class BannedUsersTable extends React.Component {
     }
 
     async componentDidMount() {
-        this.loadBannedUsers();
+        this.loadModerators();
     }
 
     async loadPreviousUsers() {
-        this.loadBannedUsers(this.state.cursor, true);
+        this.loadModerators(this.state.cursor, true);
     }
 
     async loadNextUsers() {
-        this.loadBannedUsers(this.state.cursor, false, true);
+        this.loadModerators(this.state.cursor, false, true);
     }
 
-    async loadBannedUsers(cursor, isBefore = false, isAfter = false) {
+    async loadModerators(cursor, isBefore = false, isAfter = false) {
         this.setState({
-            bans: [],
+            moderators: [],
             cursor: null,
             loading: true
         });
@@ -72,7 +70,7 @@ class BannedUsersTable extends React.Component {
             headers: myHeaders,
             redirect: 'follow'
         };
-        let url = `https://api.twitch.tv/helix/moderation/banned?broadcaster_id=${this.props.authInfo.userId}`;
+        let url = `https://api.twitch.tv/helix/moderation/moderators?broadcaster_id=${this.props.authInfo.userId}`;
         if (isBefore) {
             url += `&before=${cursor}`;
         }
@@ -81,16 +79,16 @@ class BannedUsersTable extends React.Component {
         }
         const response = await fetch(url, requestOptions);
         if (response.ok) {
-            const bans = await response.json();
+            const moderators = await response.json();
             this.setState({
-                bans: bans.data,
-                cursor: bans.pagination.cursor,
+                moderators: moderators.data,
+                cursor: moderators.pagination.cursor,
                 loading: false
             });
         } else {
-            this.loadBannedUsers();
+            this.loadModerators();
         }
     }
 }
 
-export default BannedUsersTable;
+export default ModeratorsTable;
